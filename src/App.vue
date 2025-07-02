@@ -1,16 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useDark, useToggle } from '@vueuse/core'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useUserStore } from './stores/userStore'
+import { useThemeStore } from './stores/themeStore'
 // import { useToast } from 'vue-toastification' // Décommente si tu as installé vue-toastification
 
 const sidebarOpen = ref(false)
-const isDark = useDark()
-const toggleDark = useToggle(isDark)
 const router = useRouter()
 const userStore = useUserStore()
+const themeStore = useThemeStore()
 // const toast = useToast && useToast() // Décommente si tu as installé vue-toastification
+
+// Initialiser le thème au montage
+onMounted(() => {
+  themeStore.initTheme()
+})
 
 // Utilisateur connecté fictif (id 1)
 const currentUser = userStore.getUserById ? userStore.getUserById(1) : (userStore.users && userStore.users[0])
@@ -114,7 +118,7 @@ function getIcon(icon: string) {
 </script>
 
 <template>
-  <div :data-theme="isDark ? 'dark' : 'light'" class="min-h-screen flex flex-col font-sans bg-white text-black w-full h-full">
+  <div :data-theme="themeStore.theme" class="min-h-screen flex flex-col font-sans bg-white text-black w-full h-full">
     <!-- Header neutre -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-white flex items-center px-6 h-16 w-full" style="border: none; box-shadow: none;">
       <button class="btn btn-ghost btn-circle mr-4" @click="sidebarOpen = true" aria-label="Ouvrir le menu">
@@ -125,10 +129,10 @@ function getIcon(icon: string) {
         <span class="font-semibold text-lg tracking-tight">DGGT | Marchés Publics</span>
       </router-link>
       <div class="flex-1"></div>
-      <!-- Bouton dark/light mode -->
-      <button class="btn btn-ghost btn-circle mr-4" @click="() => toggleDark()" aria-label="Basculer mode sombre/clair">
-        <svg v-if="!isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-13.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.95 7.05l-.71-.71M6.34 6.34l-.71-.71M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-        <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" /></svg>
+      <!-- Bouton de changement de thème -->
+      <button class="btn btn-ghost btn-circle mr-4" @click="themeStore.toggleTheme" aria-label="Basculer thème">
+        <svg v-if="themeStore.theme === 'classic'" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-13.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.95 7.05l-.71-.71M6.34 6.34l-.71-.71M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
+        <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v12a4 4 0 004 4h4a2 2 0 002-2V5z" /></svg>
       </button>
       <!-- Utilisateur connecté + menu -->
       <div class="relative" v-if="currentUser">

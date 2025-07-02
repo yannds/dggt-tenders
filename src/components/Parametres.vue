@@ -7,10 +7,10 @@
     <div class="mb-8">
       <label class="block text-lg font-semibold mb-2">Thème de l'interface</label>
       <div class="flex gap-4">
-        <button :class="theme === 'classic' ? 'btn btn-primary' : 'btn btn-outline'" @click="setTheme('classic')">
+        <button :class="themeStore.theme === 'classic' ? 'btn btn-primary' : 'btn btn-outline'" @click="themeStore.setTheme('classic')">
           Classique
         </button>
-        <button :class="theme === 'classicmodern' ? 'btn btn-primary' : 'btn btn-outline'" @click="setTheme('classicmodern')">
+        <button :class="themeStore.theme === 'classicmodern' ? 'btn btn-primary' : 'btn btn-outline'" @click="themeStore.setTheme('classicmodern')">
           Classic Modern
         </button>
       </div>
@@ -19,16 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-const theme = ref('classic')
-function setTheme(t: string) {
-  theme.value = t
-  document.documentElement.setAttribute('data-theme', t)
-  localStorage.setItem('theme', t)
-}
-onMounted(() => {
-  const saved = localStorage.getItem('theme')
-  if (saved) setTheme(saved)
-  else setTheme('classic')
-})
+import { useThemeStore } from '../stores/themeStore'
+
+const themeStore = useThemeStore()
 </script> 
