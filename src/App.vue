@@ -105,6 +105,8 @@ function getIcon(icon: string) {
       return `<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 text-blue-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'><circle cx='11' cy='11' r='7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><line x1='21' y1='21' x2='16.65' y2='16.65' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>`
     case 'lock':
       return `<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 text-blue-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'><rect x='5' y='11' width='14' height='10' rx='2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 11V7a5 5 0 0110 0v4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>`
+    case 'settings':
+      return `<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 text-blue-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 10c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6z' /></svg>`
     default:
       return ''
   }
@@ -124,7 +126,7 @@ function getIcon(icon: string) {
       </router-link>
       <div class="flex-1"></div>
       <!-- Bouton dark/light mode -->
-      <button class="btn btn-ghost btn-circle mr-4" @click="toggleDark" aria-label="Basculer mode sombre/clair">
+      <button class="btn btn-ghost btn-circle mr-4" @click="() => toggleDark()" aria-label="Basculer mode sombre/clair">
         <svg v-if="!isDark" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m8.66-13.66l-.71.71M4.05 19.95l-.71.71M21 12h-1M4 12H3m16.95 7.05l-.71-.71M6.34 6.34l-.71-.71M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
         <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" /></svg>
       </button>
@@ -180,6 +182,12 @@ function getIcon(icon: string) {
                   </li>
                 </ul>
               </template>
+            </li>
+            <li>
+              <router-link to="/parametres" class="px-3 py-2 rounded text-base font-medium text-gray-900 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 block flex items-center gap-2" @click="sidebarOpen = false">
+                <span v-html="getIcon('settings')"></span>
+                Paramètres
+              </router-link>
             </li>
           </ul>
         </nav>

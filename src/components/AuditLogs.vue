@@ -161,8 +161,7 @@ const uniqueActions = computed(() => [...new Set(logs.value.map(l => l.action))]
 const uniqueModules = computed(() => [...new Set(logs.value.map(l => l.module))])
 const uniqueIPs = computed(() => [...new Set(logs.value.map(l => l.ip))])
 const uniqueStatus = computed(() => [...new Set(logs.value.map(l => l.status))])
-const uniqueSessions = computed(() => [...new Set(logs.value.map(l => l.session))])
-const uniqueHeures = computed(() => [...new Set(logs.value.map(l => l.heure))])
+
 const uniqueTypes = computed(() => [...new Set(logs.value.map(l => l.type))])
 const page = ref(1)
 const pageSize = ref(10)
@@ -216,7 +215,7 @@ function exportSelected(format: string) {
     const url = URL.createObjectURL(blob)
     downloadFile(url, 'audit-logs.csv')
   } else if (format === 'xml') {
-    dataStr = '<logs>' + toExport.map(log => '<log>' + Object.entries(log).map(([k, v]) => `<${k}>${String(v).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}</${k}>`).join('') + '</log>').join('') + '</logs>'
+    dataStr = '<logs>' + toExport.filter(log => !!log).map(log => '<log>' + Object.entries(log as Record<string, unknown>).map(([k, v]) => `<${String(k)}>${String(v ?? '').replace(/[<>&]/g, (c: string): string => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c] ?? c))}</${String(k)}>`).join('') + '</log>').join('') + '</logs>'
     const blob = new Blob([dataStr], { type: 'application/xml' })
     const url = URL.createObjectURL(blob)
     downloadFile(url, 'audit-logs.xml')
@@ -248,10 +247,7 @@ function printSelected() {
   win.focus()
   win.print()
 }
-const rowDetailsOpen = ref<Record<number, boolean>>({})
-function toggleRowDetails(id: number) {
-  rowDetailsOpen.value[id] = !rowDetailsOpen.value[id]
-}
+
 function copyRawLog(log: any) {
   navigator.clipboard.writeText(JSON.stringify(log, null, 2))
 }

@@ -130,7 +130,7 @@
             <td class="text-sm text-gray-700 px-6">{{ role.description }}</td>
             <td class="text-xs text-gray-600 max-w-xs whitespace-nowrap px-6">
               <template v-if="getRoleRightsBadges(role.id).length">
-                <span v-for="(badge, i) in getRoleRightsBadges(role.id).slice(0, 3)" :key="badge.text" :class="'inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ' + badge.class + ' mr-1'">
+                <span v-for="badge in getRoleRightsBadges(role.id).slice(0, 3)" :key="badge.text" :class="'inline-flex items-center gap-1 rounded-full px-2 py-1 text-xs font-medium ' + badge.class + ' mr-1'">
                   <span v-if="badge.icon">{{ badge.icon }}</span> {{ badge.text }}
                 </span>
                 <span v-if="getRoleRightsBadges(role.id).length > 3" class="badge badge-ghost text-xs font-medium align-middle cursor-pointer" :title="getRoleRightsTooltip(role.id)">
@@ -173,8 +173,7 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import { useRouter } from 'vue-router'
-const router = useRouter()
+
 type Role = { id: number; name: string; description: string }
 let roles: Role[] = [
   { id: 1, name: 'Admin', description: '' },
@@ -190,6 +189,7 @@ let roles: Role[] = [
   { id: 11, name: 'Public', description: '' },
   { id: 12, name: 'Auditeur', description: "Accès aux logs d'audit (ISO 27001)" },
 ]
+
 const modules = ref([
   { id: 'dao', name: 'DAO' },
   { id: 'decomptes', name: 'Décomptes' },
@@ -216,7 +216,7 @@ const actions = ref([
   { id: 'stats', name: 'Observatoire Stats' },
 ])
 const selectedRoleId = ref(roles[0].id)
-const selectedRoleName = computed(() => roles.find(r => r.id === selectedRoleId.value)?.name || '')
+
 
 const defaultPermissions: Record<number, Record<string, Record<string, boolean>>> = {
   1: Object.fromEntries(actions.value.map(a => [a.id, Object.fromEntries(modules.value.map(m => [m.id, true]))])),
@@ -302,7 +302,7 @@ const toast = ref('')
 const search = ref('')
 const showAddRole = ref(false)
 const newRole = ref<{ id?: number; name: string; description: string; permissions: Record<string, Record<string, boolean>> }>({ name: '', description: '', permissions: {} })
-const modalRole = ref(null)
+const modalRole = ref<Role | null>(null)
 const isEditMode = ref(false)
 
 // Palette et icônes pour chaque module
@@ -364,10 +364,7 @@ function togglePermission(actionId: string, moduleId: string, checked: boolean) 
   if (!permissions.value[actionId]) permissions.value[actionId] = {}
   permissions.value[actionId][moduleId] = checked
 }
-function resetPermissions() {
-  loadPermissions(selectedRoleId.value)
-  showToast('Droits réinitialisés !')
-}
+
 function exportJSON() {
   const blob = new Blob([JSON.stringify(permissions.value, null, 2)], { type: 'application/json' })
   const url = URL.createObjectURL(blob)
@@ -424,7 +421,7 @@ function openAddRoleModal() {
   showAddRole.value = true
 }
 
-function viewRole(role: any) { modalRole.value = role }
+
 function editRole(role: any) {
   // Pré-remplit le formulaire avec les infos du rôle
   isEditMode.value = true
@@ -454,22 +451,6 @@ function deleteRole(role: any) {
   }
 }
 
-function getRoleRightsText(roleId: number): string {
-  const perms = defaultPermissions[roleId]
-  if (!perms || typeof perms !== 'object') return '-'
-  let rights: string[] = []
-  for (const act in perms) {
-    if (!perms[act] || typeof perms[act] !== 'object') continue
-    for (const mod in perms[act]) {
-      if (perms[act][mod]) {
-        const modName = modules.value.find((m: any) => m.id === mod)?.name || mod
-        rights.push(`${act} ${modName}`)
-      }
-    }
-  }
-  return rights.length ? rights.join(', ') : '-'
-}
-
 function getRoleRightsBadges(roleId: number): { text: string; class: string; icon: string }[] {
   const perms = defaultPermissions[roleId]
   if (!perms || typeof perms !== 'object') return []
@@ -495,9 +476,7 @@ function getRoleRightsTooltip(roleId: number): string {
   return getRoleRightsBadges(roleId).map((b: {text: string}) => b.text).join(', ')
 }
 
-function goToEditRole(role: any) {
-  router.push(`/admin/roles/${role.id}/edit`)
-}
+
 </script>
 
 <style scoped>

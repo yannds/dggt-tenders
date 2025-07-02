@@ -71,7 +71,7 @@
               <button class="btn btn-xs btn-circle bg-white/80 border-0 shadow hover:bg-blue-100 transition" @click.stop="modalInteractionUser = user" title="Voir interactions">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-sky-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
               </button>
-              <button class="btn btn-xs btn-circle bg-white/80 border-0 shadow hover:bg-blue-100 transition" @click.stop="resetPassword(user.id)" title="Réinitialiser MDP">
+              <button class="btn btn-xs btn-circle bg-white/80 border-0 shadow hover:bg-blue-100 transition" @click.stop="resetPassword()" title="Réinitialiser MDP">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c0-1.657 1.343-3 3-3s3 1.343 3 3v2a3 3 0 01-3 3H9a3 3 0 01-3-3v-2a3 3 0 013-3c1.657 0 3 1.343 3 3z" /></svg>
               </button>
               <button class="btn btn-xs btn-circle bg-white/80 border-0 shadow hover:bg-blue-100 transition" @click.stop="toggleActive(user.id)" :title="user.actif ? 'Désactiver' : 'Activer'">
@@ -319,12 +319,9 @@ function showToast(msg: string) {
   toastMessage.value = msg
   setTimeout(() => { toastMessage.value = '' }, 2500)
 }
-function resetPassword(id: number) {
-  if (window.confirm("Confirmer la réinitialisation du mot de passe de cet utilisateur ?")) {
-    if (userStore.resetPassword(id)) {
-      showToast("Mot de passe réinitialisé avec succès !")
-    }
-  }
+function resetPassword() {
+  userStore.resetPassword()
+  showToast('Email de réinitialisation envoyé !')
 }
 function toggleActive(id: number) {
   userStore.toggleActive(id)
@@ -344,10 +341,6 @@ function formatDate(dateStr: string) {
 }
 function printUsers() {
   window.print()
-}
-function editUser(user: any) {
-  // Redirige vers la page d'édition de l'utilisateur
-  window.location.href = `/admin/accounts/${user.id}/edit`
 }
 function goToCreateUser() {
   router.push('/admin/accounts/create')

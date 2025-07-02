@@ -89,10 +89,9 @@ export const useUserStore = defineStore('user', {
     removeUser(id: number) {
       this.users = this.users.filter(u => u.id !== id)
     },
-    resetPassword(id: number) {
-      // Ici tu pourrais appeler une API ou générer un token de réinitialisation
-      // Pour la démo, on retourne true
-      return true
+    resetPassword() {
+      // Logique de réinitialisation de mot de passe
+      console.log('Réinitialisation du mot de passe')
     },
     toggleActive(id: number) {
       const user = this.users.find(u => u.id === id)

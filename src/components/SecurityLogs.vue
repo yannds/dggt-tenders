@@ -195,7 +195,7 @@ function exportSelected(format: string) {
     const url = URL.createObjectURL(blob)
     downloadFile(url, 'logs.csv')
   } else if (format === 'xml') {
-    dataStr = '<logs>' + toExport.map(log => '<log>' + Object.entries(log).map(([k, v]) => `<${k}>${String(v).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}</${k}>`).join('') + '</log>').join('') + '</logs>'
+    dataStr = '<logs>' + toExport.filter(log => !!log).map(log => '<log>' + Object.entries(log as Record<string, unknown>).map(([k, v]) => `<${String(k)}>${String(v ?? '').replace(/[<>&]/g, (c: string): string => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c] ?? c))}</${String(k)}>`).join('') + '</log>').join('') + '</logs>'
     const blob = new Blob([dataStr], { type: 'application/xml' })
     const url = URL.createObjectURL(blob)
     downloadFile(url, 'logs.xml')

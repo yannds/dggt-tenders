@@ -8,6 +8,7 @@
     <div class="text-xs text-gray-500">en cours</div>
   </div>
 </template>
-<script setup lang="ts">
+
+<script setup>
 const props = defineProps({ icon: Boolean, colorClass: { type: String, default: '' } })
 </script> 

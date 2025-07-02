@@ -42,7 +42,7 @@
               v-model="roleSearch"
               @focus="showRoleDropdown = true"
               @input="showRoleDropdown = true"
-              @blur="() => setTimeout(() => showRoleDropdown = false, 150)"
+              @blur="hideRoleDropdown"
               type="text"
               class="input input-bordered w-full bg-gray-100 text-gray-800 border-0 focus:ring-2 focus:ring-blue-400"
               placeholder="Rechercher ou ajouter un rôle..."
@@ -164,6 +164,10 @@ const toastMessage = ref('')
 function showToast(msg: string) {
   toastMessage.value = msg
   setTimeout(() => { toastMessage.value = '' }, 2500)
+}
+
+function hideRoleDropdown() {
+  setTimeout(() => { showRoleDropdown.value = false }, 150)
 }
 
 function onSubmit() {

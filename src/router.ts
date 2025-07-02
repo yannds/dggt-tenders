@@ -49,6 +49,11 @@ const routes: RouteRecordRaw[] = [
     component: () => import('./components/SecurityLogs.vue'),
   },
   {
+    path: '/parametres',
+    name: 'Parametres',
+    component: () => import('./components/Parametres.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: { template: '<div style="background: #ffe0e0; padding: 2rem; text-align: center;">404 NOT FOUND</div>' }
