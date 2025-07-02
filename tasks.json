@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "title": "Initialiser projet Cursor AI avec Vue 3 + Tailwind CSS",
+    "status": "done",
+    "description": "Installer Node.js, NPM, Tailwind, Vue 3, et configurer environnement de dev",
+    "prompt": "installation-environnement.prompt.md"
+  },
+  {
+    "id": 2,
+    "title": "Gestion des comptes, rôles et paramètres système",
+    "status": "todo",
+    "description": "Module d'administration complet : CRUD utilisateurs, gestion rôles, paramètres globaux, sidebar responsive, sécurité.",
+    "prompt": "01-gestion-comptes-roles-parametres.prompt.md",
+    "subtasks": [
+      { "title": "Créer UserList.vue (liste utilisateurs)", "status": "todo" },
+      { "title": "Créer UserForm.vue (formulaire création/édition)", "status": "todo" },
+      { "title": "Créer RoleManager.vue (gestion rôles/privilèges)", "status": "todo" },
+      { "title": "Créer SystemConfig.vue (paramètres globaux)", "status": "todo" },
+      { "title": "Mettre en place routes admin (/admin/*)", "status": "todo" },
+      { "title": "Créer services backend user.service.ts, role.service.ts, parameter.service.ts", "status": "todo" },
+      { "title": "Validation forte (email, mot de passe, etc.)", "status": "todo" },
+      { "title": "Sidebar et header admin responsive", "status": "todo" },
+      { "title": "Gestion d'état (Pinia)", "status": "todo" },
+      { "title": "Notifications toast DaisyUI", "status": "todo" },
+      { "title": "Tests unitaires basiques (validation formulaire, sécurité)", "status": "todo" },
+      { "title": "Documentation utilisateur et technique", "status": "todo" }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Élaboration des Plans de Passation des Marchés (PPM)",
+    "status": "todo",
+    "description": "Formulaire création PPM, validation DGCMP, publication front public",
+    "prompt": "02-ppm.prompt.md"
+  },
+  {
+    "id": 4,
+    "title": "DAO : création, publication, achat, critères",
+    "status": "todo",
+    "description": "Module DAO complet avec gestion statuts et critères",
+    "prompt": "03-dao.prompt.md"
+  },
+  {
+    "id": 5,
+    "title": "Soumission des offres",
+    "status": "todo",
+    "description": "Formulaire soumission, upload fichiers, verrouillage après dépôt",
+    "prompt": "04-soumission.ppm.prompt.md"
+  },
+  {
+    "id": 6,
+    "title": "Dépouillement et évaluation",
+    "status": "todo",
+    "description": "Affichage offres, auto scoring, ajustement manuel, PV signé",
+    "prompt": "05-depouillement-evaluation.prompt.md"
+  },
+  {
+    "id": 7,
+    "title": "Attribution et ANO (DGCMP)",
+    "status": "todo",
+    "description": "Attribution provisoire, validation DGCMP, notifications, standstill",
+    "prompt": "06-attribution-ano.prompt.md"
+  },
+  {
+    "id": 8,
+    "title": "Recours, ARMP, contentieux",
+    "status": "todo",
+    "description": "Gestion des recours et contentieux avec interface ARMP",
+    "prompt": "07-recours-armp.prompt.md"
+  },
+  {
+    "id": 9,
+    "title": "Suivi de projet et attachements",
+    "status": "todo",
+    "description": "Upload et validation documents, suivi chantier, PAC, PV",
+    "prompt": "08-suivi-attachments.prompt.md"
+  },
+  {
+    "id": 10,
+    "title": "Décomptes et paiements",
+    "status": "todo",
+    "description": "Calcul acomptes, génération facture PDF, historique paiements",
+    "prompt": "09-decomptes-paiements.prompt.md"
+  },
+  {
+    "id": 11,
+    "title": "Observatoire public et statistiques",
+    "status": "todo",
+    "description": "Statistiques DAO, graphiques dynamiques, export Excel/CSV",
+    "prompt": "10-observatoire-statistiques.prompt.md"
+  },
+  {
+    "id": 12,
+    "title": "Audit et sécurité (ISO 27001)",
+    "status": "todo",
+    "description": "Logs, traçabilité, alertes, conformité RGPD/ISO",
+    "prompt": "12-audit-securite.prompt.md"
+  },
+  {
+    "id": 13,
+    "title": "Restaurer advanced stats & user menu",
+    "status": "todo",
+    "description": "Restaurer la branche feat/advanced-stats-user-menu et le point de sauvegarde avancé (tag restore-point-advanced-stats)",
+    "prompt": "restaurer-advanced-stats-user-menu.prompt.md"
+  }
+]
