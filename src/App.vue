@@ -119,6 +119,11 @@ function getIcon(icon: string) {
 
 <template>
   <div :data-theme="themeStore.theme" class="min-h-screen flex flex-col font-sans bg-white text-black w-full h-full">
+    <!-- Debug: Afficher le thème actuel -->
+    <div class="fixed top-20 right-4 bg-red-500 text-white p-2 rounded z-50 text-xs">
+      Thème: {{ themeStore.theme }}
+    </div>
+    
     <!-- Header neutre -->
     <header class="fixed top-0 left-0 right-0 z-50 bg-white flex items-center px-6 h-16 w-full" style="border: none; box-shadow: none;">
       <button class="btn btn-ghost btn-circle mr-4" @click="sidebarOpen = true" aria-label="Ouvrir le menu">
@@ -191,6 +196,12 @@ function getIcon(icon: string) {
               <router-link to="/parametres" class="px-3 py-2 rounded text-base font-medium text-gray-900 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 block flex items-center gap-2" @click="sidebarOpen = false">
                 <span v-html="getIcon('settings')"></span>
                 Paramètres
+              </router-link>
+            </li>
+            <li>
+              <router-link to="/test" class="px-3 py-2 rounded text-base font-medium text-gray-900 hover:bg-blue-50 hover:text-blue-700 transition-colors duration-200 block flex items-center gap-2" @click="sidebarOpen = false">
+                <span v-html="getIcon('search')"></span>
+                Test Thèmes
               </router-link>
             </li>
           </ul>

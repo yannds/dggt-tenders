@@ -16,6 +16,60 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Styles personnalisés pour les thèmes */
+[data-theme="classic"] {
+  --primary-color: #22C55E;
+  --secondary-color: #F59E42;
+  --background-color: #ffffff;
+  --text-color: #000000;
+}
+
+[data-theme="classicmodern"] {
+  --primary-color: #22C55E;
+  --secondary-color: #0D8ABC;
+  --background-color: #F8FAFC;
+  --text-color: #1e293b;
+}
+
+/* Application des variables CSS */
+[data-theme="classic"] .btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+[data-theme="classicmodern"] .btn-primary {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+  border-radius: 1.25rem !important;
+}
+
+[data-theme="classic"] .bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+[data-theme="classicmodern"] .bg-primary {
+  background-color: var(--primary-color) !important;
+}
+
+[data-theme="classic"] .text-primary {
+  color: var(--primary-color) !important;
+}
+
+[data-theme="classicmodern"] .text-primary {
+  color: var(--primary-color) !important;
+}
+
+/* Changements de fond */
+[data-theme="classic"] body {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
+[data-theme="classicmodern"] body {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
