@@ -15,6 +15,12 @@ const userStore = useUserStore()
 // Utilisateur connecté fictif (id 1)
 const currentUser = userStore.getUserById ? userStore.getUserById(1) : (userStore.users && userStore.users[0])
 
+// Correction : rôle principal de l'utilisateur connecté (ex: 'admin', 'auditeur', etc.)
+const currentUserRole = currentUser && currentUser.roles && currentUser.roles.length > 0
+  ? (currentUser.roles.map(r => r.toLowerCase()).includes('administrateur') ? 'admin' : (currentUser.roles.map(r => r.toLowerCase()).includes('auditeur') ? 'auditeur' : ''))
+  : ''
+
+// Construction dynamique des liens de navigation
 const navLinks = [
   { to: '/', label: 'Dashboard', icon: 'home' },
   {
@@ -23,8 +29,22 @@ const navLinks = [
       { to: '/admin/privileges', label: 'Privilèges & rôles', icon: 'key' },
     ]
   },
-  // Ajoute d'autres liens ici si besoin
 ]
+// Ajout du menu Audit/Sécurité à la racine si le rôle le permet
+if (currentUserRole === 'admin' || currentUserRole === 'auditeur') {
+  const auditChildren = [
+    { to: '/admin/audit', label: 'Audit', icon: 'search' },
+  ]
+  if (currentUserRole === 'admin') {
+    auditChildren.push({ to: '/admin/security', label: 'Sécurité', icon: 'lock' })
+  }
+  // Si plusieurs sous-menus, on regroupe, sinon on met à plat
+  if (auditChildren.length > 1) {
+    navLinks.push({ label: 'Audit', icon: 'search', children: auditChildren })
+  } else {
+    navLinks.push(auditChildren[0])
+  }
+}
 
 function handleMenuAction(action: string) {
   if (!currentUser) return
@@ -81,6 +101,10 @@ function getIcon(icon: string) {
       return `<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 text-blue-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z' /></svg>`
     case 'key':
       return `<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 text-blue-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 7a4 4 0 11-8 0 4 4 0 018 0zm6 10a2 2 0 11-4 0 2 2 0 014 0zm-2-2v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2' /></svg>`
+    case 'search':
+      return `<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 text-blue-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'><circle cx='11' cy='11' r='7' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><line x1='21' y1='21' x2='16.65' y2='16.65' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>`
+    case 'lock':
+      return `<svg xmlns='http://www.w3.org/2000/svg' class='h-5 w-5 text-blue-400' fill='none' viewBox='0 0 24 24' stroke='currentColor'><rect x='5' y='11' width='14' height='10' rx='2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/><path d='M7 11V7a5 5 0 0110 0v4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>`
     default:
       return ''
   }

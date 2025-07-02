@@ -39,6 +39,16 @@ const routes: RouteRecordRaw[] = [
     component: PrivilegesRoles,
   },
   {
+    path: '/admin/audit',
+    name: 'AuditLogs',
+    component: () => import('./components/AuditLogs.vue'),
+  },
+  {
+    path: '/admin/security',
+    name: 'SecurityLogs',
+    component: () => import('./components/SecurityLogs.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: { template: '<div style="background: #ffe0e0; padding: 2rem; text-align: center;">404 NOT FOUND</div>' }
